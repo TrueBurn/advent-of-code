@@ -1,4 +1,4 @@
-import os
+from collections import Counter
 
 def parse_input(filename):
     left_list = []
@@ -6,12 +6,10 @@ def parse_input(filename):
 
     with open(filename, 'r') as f:
         for line in f:
-            # Skip empty lines
             line = line.strip()
             if not line:
                 continue
 
-            # Split each line into two numbers
             left, right = map(int, line.split())
             left_list.append(left)
             right_list.append(right)
@@ -19,22 +17,38 @@ def parse_input(filename):
     return left_list, right_list
 
 def calculate_total_distance(left_list, right_list):
-    # Sort both lists
     left_sorted = sorted(left_list)
     right_sorted = sorted(right_list)
 
-    # Calculate total distance
-    total_distance = 0
+    total = 0
     for l, r in zip(left_sorted, right_sorted):
-        distance = abs(l - r)
-        total_distance += distance
+        total += abs(l - r)
 
-    return total_distance
+    return total
+
+def calculate_similarity_score(left_list, right_list):
+    right_counts = Counter(right_list)
+    return sum(num * right_counts.get(num, 0) for num in left_list)
+
+def part_one(left_list, right_list):
+    return calculate_total_distance(left_list, right_list)
+
+def part_two(left_list, right_list):
+    return calculate_similarity_score(left_list, right_list)
 
 def main():
+    print("Parsing input...")
     left_list, right_list = parse_input('input.txt')
-    answer = calculate_total_distance(left_list, right_list)
-    print(f"The total distance between the lists is: {answer}")
+
+    print("\nProcessing Part 1...")
+    result1 = part_one(left_list, right_list)
+
+    print("\nProcessing Part 2...")
+    result2 = part_two(left_list, right_list)
+
+    print("\n=== Final Results ===")
+    print(f"Part 1: Total distance between lists: {result1}")
+    print(f"Part 2: Similarity score: {result2}")
 
 if __name__ == "__main__":
     main()

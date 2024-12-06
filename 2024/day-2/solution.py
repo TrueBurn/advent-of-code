@@ -7,7 +7,6 @@ def parse_input(filename):
             line = line.strip()
             if not line:
                 continue
-            # Convert line of numbers to list of integers
             sequence = list(map(int, line.split()))
             sequences.append(sequence)
     return sequences
@@ -16,17 +15,14 @@ def is_safe_sequence(sequence):
     if len(sequence) < 2:
         return False
 
-    # Check first two numbers to determine if sequence should be increasing or decreasing
     increasing = sequence[1] > sequence[0]
 
     for i in range(1, len(sequence)):
         diff = sequence[i] - sequence[i-1]
 
-        # Check if difference is between 1 and 3 (inclusive)
         if abs(diff) < 1 or abs(diff) > 3:
             return False
 
-        # Check if sequence maintains increasing/decreasing pattern
         if increasing and diff < 0:
             return False
         if not increasing and diff > 0:
@@ -34,17 +30,44 @@ def is_safe_sequence(sequence):
 
     return True
 
-def count_safe_sequences(sequences):
-    safe_count = 0
+def check_with_dampener(sequence):
+    if is_safe_sequence(sequence):
+        return True
+
+    for i in range(len(sequence)):
+        dampened = sequence[:i] + sequence[i+1:]
+        if is_safe_sequence(dampened):
+            return True
+
+    return False
+
+def part_one(sequences):
+    count = 0
     for sequence in sequences:
         if is_safe_sequence(sequence):
-            safe_count += 1
-    return safe_count
+            count += 1
+    return count
+
+def part_two(sequences):
+    count = 0
+    for sequence in sequences:
+        if check_with_dampener(sequence):
+            count += 1
+    return count
 
 def main():
-    sequences = parse_input('input.txt')  # Changed to just input.txt
-    safe_count = count_safe_sequences(sequences)
-    print(f"Number of safe sequences: {safe_count}")
+    print("Parsing input...")
+    sequences = parse_input('input.txt')
+
+    print("\nProcessing Part 1...")
+    result1 = part_one(sequences)
+
+    print("\nProcessing Part 2...")
+    result2 = part_two(sequences)
+
+    print("\n=== Final Results ===")
+    print(f"Part 1: Found {result1} safe sequences")
+    print(f"Part 2: Found {result2} sequences that can be made safe")
 
 if __name__ == "__main__":
     main()

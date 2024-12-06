@@ -5,41 +5,62 @@ def parse_input(filename):
         content = f.read()
     return content
 
-def find_valid_multiplications(content):
-    # Regular expression to find mul(X,Y) patterns
-    # Matches: mul(digits,digits) where digits are 1-3 characters long
-    pattern = r'mul\((\d{1,3}),(\d{1,3})\)'
+def find_multiplications(content, check_enabled=False):
+    mul_pattern = r'mul\((\d{1,3}),(\d{1,3})\)'
+    do_pattern = r'do\(\)'
+    dont_pattern = r'don\'t\(\)'
 
-    # Find all matches in the content
-    matches = re.finditer(pattern, content)
+    # Find all matches with positions
+    muls = [(m.start(), int(m.group(1)), int(m.group(2)))
+            for m in re.finditer(mul_pattern, content)]
 
-    multiplications = []
-    for match in matches:
-        # Extract the two numbers
-        num1 = int(match.group(1))
-        num2 = int(match.group(2))
-        multiplications.append((num1, num2))
+    if not check_enabled:
+        return [(n1, n2) for _, n1, n2 in muls]
 
-    return multiplications
+    # Get control instructions
+    dos = [m.start() for m in re.finditer(do_pattern, content)]
+    donts = [m.start() for m in re.finditer(dont_pattern, content)]
 
-def calculate_total(multiplications):
-    total = 0
-    for num1, num2 in multiplications:
-        result = num1 * num2
-        total += result
-    return total
+    # Combine control instructions
+    controls = [(pos, True) for pos in dos]
+    controls.extend((pos, False) for pos in donts)
+    controls.sort()
+
+    # Process multiplications
+    results = []
+    enabled = True  # Start enabled
+    for pos, num1, num2 in muls:
+        # Update enabled state based on controls
+        while controls and controls[0][0] < pos:
+            enabled = controls[0][1]
+            controls.pop(0)
+
+        if enabled:
+            results.append((num1, num2))
+
+    return results
+
+def part_one(content):
+    muls = find_multiplications(content, check_enabled=False)
+    return sum(x * y for x, y in muls)
+
+def part_two(content):
+    muls = find_multiplications(content, check_enabled=True)
+    return sum(x * y for x, y in muls)
 
 def main():
-    # Read and parse input
+    print("Parsing input...")
     content = parse_input('input.txt')
 
-    # Find all valid multiplications
-    multiplications = find_valid_multiplications(content)
+    print("\nProcessing Part 1...")
+    result1 = part_one(content)
 
-    # Calculate total
-    total = calculate_total(multiplications)
+    print("\nProcessing Part 2...")
+    result2 = part_two(content)
 
-    print(f"Sum of all multiplication results: {total}")
+    print("\n=== Final Results ===")
+    print(f"Part 1: Sum of all multiplication results: {result1}")
+    print(f"Part 2: Sum of enabled multiplication results: {result2}")
 
 if __name__ == "__main__":
     main()

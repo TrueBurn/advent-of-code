@@ -29,17 +29,46 @@ def check_order(sequence, rules):
 def get_middle(sequence):
     return sequence[len(sequence) // 2]
 
-def sum_valid_middles(rules, sequences):
+def part_one(rules, sequences):
     total = 0
     for sequence in sequences:
         if check_order(sequence, rules):
             total += get_middle(sequence)
     return total
 
+def order_sequence(sequence, rules):
+    nums = sequence.copy()
+    size = len(nums)
+
+    for i in range(size):
+        for j in range(size - i - 1):
+            for before, after in rules:
+                if nums[j] == after and nums[j+1] == before:
+                    nums[j], nums[j+1] = nums[j+1], nums[j]
+    return nums
+
+def part_two(rules, sequences):
+    total = 0
+    for sequence in sequences:
+        if not check_order(sequence, rules):
+            ordered = order_sequence(sequence, rules)
+            total += get_middle(ordered)
+    return total
+
 def main():
+    print("Parsing input...")
     rules, sequences = parse_input('input.txt')
-    result = sum_valid_middles(rules, sequences)
-    print(f"Sum of middle numbers from valid sequences: {result}")
+
+    print("\nProcessing Part 1...")
+    result1 = part_one(rules, sequences)
+
+    print("\nProcessing Part 2...")
+    result2 = part_two(rules, sequences)
+
+    # Final results display
+    print("\n=== Final Results ===")
+    print(f"Part 1: Sum of middle numbers from valid sequences: {result1}")
+    print(f"Part 2: Sum of middle numbers from fixed sequences: {result2}")
 
 if __name__ == "__main__":
     main()
