@@ -2,20 +2,29 @@
 
 This repository contains my solutions to [Advent of Code](https://adventofcode.com/) challenges. Advent of Code is an annual coding event with daily programming puzzles released from December 1st to December 25th.
 
-## 🌟 Structure
-
-```
-
 ## 🚀 Solutions
+
+### 2024 Progress: 6/25 ⭐⭐
 
 | Day | Part 1 | Part 2 | Solution |
 |-----|--------|--------|----------|
-| [Day 1: Historian Hysteria](2024/day-1) | ⭐ | ⭐ | [Python](2024/day-1/solution.py) |
-| [Day 2: Red-Nosed Reports](2024/day-2) | ⭐ | ⭐ | [Python](2024/day-2/solution.py) |
-| [Day 3: Mull It Over](2024/day-3) | ⭐ | ⭐ | [Python](2024/day-3/solution.py) |
-| [Day 4: Ceres Search](2024/day-4) | ⭐ | ⭐ | [Python](2024/day-4/solution.py) |
-| [Day 5: Print Queue](2024/day-5) | ⭐ | ⭐ | [Python](2024/day-5/solution.py) |
-| [Day 6: Guard Gallivant](2024/day-6) | ⭐ | ⭐ | [Python](2024/day-6/solution.py) |
+| [![Day 1](https://img.shields.io/badge/Day%201-Historian%20Hysteria-blue)](2024/day-1/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-1/solution.py) |
+| [![Day 2](https://img.shields.io/badge/Day%202-Red--Nosed%20Reports-blue)](2024/day-2/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-2/solution.py) |
+| [![Day 3](https://img.shields.io/badge/Day%203-Mull%20It%20Over-blue)](2024/day-3/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-3/solution.py) |
+| [![Day 4](https://img.shields.io/badge/Day%204-Ceres%20Search-blue)](2024/day-4/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-4/solution.py) |
+| [![Day 5](https://img.shields.io/badge/Day%205-Print%20Queue-blue)](2024/day-5/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-5/solution.py) |
+| [![Day 6](https://img.shields.io/badge/Day%206-Guard%20Gallivant-blue)](2024/day-6/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-6/solution.py) |
+
+### Previous Years
+- 2023: Not Attempted
+- 2022: Not Attempted
+- 2021: Not Attempted
+- 2020: Not Attempted
+- 2019: Not Attempted
+- 2018: Not Attempted
+- 2017: Not Attempted
+- 2016: Not Attempted
+- 2015: Not Attempted
 
 ## 🛠️ Running Solutions
 
