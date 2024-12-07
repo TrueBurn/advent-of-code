@@ -4,7 +4,7 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 
 ## 🚀 Solutions
 
-### 2024 Progress: 6/25 ⭐⭐
+### 2024 Progress: 7/25 ⭐⭐
 
 | Day | Part 1 | Part 2 | Solution |
 |-----|--------|--------|----------|
@@ -14,17 +14,13 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 | [![Day 4](https://img.shields.io/badge/Day%204-Ceres%20Search-blue)](2024/day-4/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-4/solution.py) |
 | [![Day 5](https://img.shields.io/badge/Day%205-Print%20Queue-blue)](2024/day-5/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-5/solution.py) |
 | [![Day 6](https://img.shields.io/badge/Day%206-Guard%20Gallivant-blue)](2024/day-6/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-6/solution.py) |
+| [![Day 7](https://img.shields.io/badge/Day%207-Bridge%20Repair-blue)](2024/day-7/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-7/solution.py) |
 
 ### Previous Years
 - 2023: Not Attempted
 - 2022: Not Attempted
 - 2021: Not Attempted
 - 2020: Not Attempted
-- 2019: Not Attempted
-- 2018: Not Attempted
-- 2017: Not Attempted
-- 2016: Not Attempted
-- 2015: Not Attempted
 
 ## 🛠️ Running Solutions
 
