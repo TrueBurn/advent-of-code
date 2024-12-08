@@ -10,7 +10,7 @@ def parse_input(filename):
             grid.append(list(ln))
     return grid
 
-def find_antennas(grid):
+def find_antennas():
     ants = {}
     for row in range(len(grid)):
         for col in range(len(grid[0])):
@@ -54,34 +54,30 @@ def find_antinode(a1, a2):
     return nodes
 
 def find_harmonic_points(a1, a2):
-    rmin, rmax = 0, len(grid)
-    cmin, cmax = 0, len(grid[0])
-
     pts = []
-    for r in range(rmin, rmax):
-        for c in range(cmin, cmax):
+    for r in range(len(grid)):
+        for c in range(len(grid[0])):
             pt = (r, c)
             if pt != a1 and pt != a2 and is_aligned(a1, a2, pt):
                 pts.append(pt)
-
     return pts
 
-def part_one(grid):
-    ants = find_antennas(grid)
+def in_bounds(pt):
+    return 0 <= pt[0] < len(grid) and 0 <= pt[1] < len(grid[0])
+
+def part_one():
+    ants = find_antennas()
     nodes = set()
 
     for freq, pos in ants.items():
         for a1, a2 in combinations(pos, 2):
             found = find_antinode(a1, a2)
-            for node in found:
-                if (0 <= node[0] < len(grid) and
-                    0 <= node[1] < len(grid[0])):
-                    nodes.add(node)
+            nodes.update(node for node in found if in_bounds(node))
 
     return len(nodes)
 
-def part_two(grid):
-    ants = find_antennas(grid)
+def part_two():
+    ants = find_antennas()
     nodes = set()
 
     for freq, pos in ants.items():
@@ -91,10 +87,7 @@ def part_two(grid):
 
         for a1, a2 in combinations(pos, 2):
             pts = find_harmonic_points(a1, a2)
-            for pt in pts:
-                if (0 <= pt[0] < len(grid) and
-                    0 <= pt[1] < len(grid[0])):
-                    nodes.add(pt)
+            nodes.update(pt for pt in pts if in_bounds(pt))
 
     return len(nodes)
 
@@ -104,10 +97,10 @@ def main():
     grid = parse_input('input.txt')
 
     print("\nProcessing Part 1...")
-    result1 = part_one(grid)
+    result1 = part_one()
 
     print("\nProcessing Part 2...")
-    result2 = part_two(grid)
+    result2 = part_two()
 
     print("\n=== Final Results ===")
     print(f"Part 1: Number of unique antinode locations: {result1}")
