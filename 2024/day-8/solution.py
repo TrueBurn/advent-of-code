@@ -28,7 +28,7 @@ def is_aligned(p1, p2, p3):
     x1, y1 = p1
     x2, y2 = p2
     x3, y3 = p3
-    return abs((y2-y1) * (x3-x1) - (y3-y1) * (x2-x1)) < 1e-10
+    return abs((y2-y1) * (x3-x1) - (y3-y1) * (x2-x1)) < 1
 
 def find_antinode(a1, a2):
     rmin = min(a1[0], a2[0])
@@ -48,7 +48,7 @@ def find_antinode(a1, a2):
             if is_aligned(a1, a2, pt):
                 d1 = dist(pt, a1)
                 d2 = dist(pt, a2)
-                if abs(d1 - 2*d2) < 1e-10 or abs(d2 - 2*d1) < 1e-10:
+                if abs(d1 - 2*d2) < 0.000001 or abs(d2 - 2*d1) < 0.000001:
                     nodes.append(pt)
 
     return nodes
