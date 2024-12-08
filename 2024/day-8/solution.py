@@ -22,7 +22,7 @@ def find_antennas(grid):
     return ants
 
 def dist(p1, p2):
-    return ((p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2) ** 0.5
+    return (p1[0] - p2[0]) ** 2 + (p1[1] - p2[1]) ** 2
 
 def is_aligned(p1, p2, p3):
     x1, y1 = p1
@@ -48,7 +48,7 @@ def find_antinode(a1, a2):
             if is_aligned(a1, a2, pt):
                 d1 = dist(pt, a1)
                 d2 = dist(pt, a2)
-                if abs(d1 - 2*d2) < 0.000001 or abs(d2 - 2*d1) < 0.000001:
+                if d1 == 4*d2 or d2 == 4*d1:
                     nodes.append(pt)
 
     return nodes
