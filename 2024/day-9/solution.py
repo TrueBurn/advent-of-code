@@ -1,5 +1,6 @@
 import os
 import time
+import heapq
 
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -182,28 +183,121 @@ def part_two(input_str):
 
     return checksum
 
+def part_two_optimized(input_str):
+    # Parse directly into lists
+    blocks = list(map(int, input_str[::2]))
+    spaces = list(map(int, input_str[1::2])) + [0]
+
+    # Create list of (pos, size, id) tuples
+    disk = []
+    pos = 0
+    for i, (block, space) in enumerate(zip(blocks, spaces)):
+        if block:
+            disk.append((pos, block, i))
+        pos += block + space
+
+    # Track moved files
+    final = {}
+    space_left = dict(enumerate(spaces))
+
+    # Pre-calculate cumulative sums for faster offset calculation
+    block_sums = [0]
+    space_sums = [0]
+    for i in range(len(blocks)):
+        block_sums.append(block_sums[-1] + blocks[i])
+        if i < len(spaces):
+            space_sums.append(space_sums[-1] + spaces[i])
+
+    # Process files in reverse
+    for pos, size, fid in reversed(disk):
+        moved = False
+        for i in range(fid):
+            if size <= space_left[i]:
+                offset = block_sums[i+1] + space_sums[i]
+                if space_left[i] != spaces[i]:
+                    offset += spaces[i] - space_left[i]
+
+                space_left[i] -= size
+                if fid - 1 in space_left:
+                    space_left[fid - 1] += size
+
+                final[fid] = (offset, size)
+                moved = True
+                break
+
+        if not moved:
+            final[fid] = (pos, size)
+
+    return sum(fid * (pos * size + size * (size - 1) // 2)
+              for fid, (pos, size) in final.items())
+
+def part_one_optimized(input_str):
+    # Parse directly into lists
+    blocks = list(map(int, input_str[::2]))
+    spaces = list(map(int, input_str[1::2])) + [0]
+
+    # Create initial disk layout
+    disk = []
+    for i, (block, space) in enumerate(zip(blocks, spaces)):
+        disk.extend([i] * block)
+        disk.extend(['.'] * space)
+
+    # Track empty positions
+    empty = []
+    for i, val in enumerate(disk):
+        if val == '.':
+            empty.append(i)
+
+    # Move files left
+    for i in range(len(disk)-1, -1, -1):
+        if disk[i] != '.':
+            if empty and empty[0] < i:
+                disk[empty[0]] = disk[i]
+                disk[i] = '.'
+                empty.pop(0)
+                empty.append(i)
+
+    # Calculate checksum
+    return sum(pos * fid for pos, fid in enumerate(disk) if fid != '.')
+
 def main():
+    run_unoptimized = True
+
     start_time = time.time()
     input_data = parse_input('input.txt')
 
     print(f"Input size: {len(input_data)} characters")
 
-    print("\n=== Part 1 ===")
-    part1_start = time.time()
-    result1 = part_one(input_data)
-    part1_time = time.time() - part1_start
+    if run_unoptimized:
+        print("\n=== Part 1 ===")
+        part1_start = time.time()
+        result1 = part_one(input_data)
+        part1_time = time.time() - part1_start
 
-    print("\n=== Part 2 ===")
-    part2_start = time.time()
-    result2 = part_two(input_data)
-    part2_time = time.time() - part2_start
+        print("\n=== Part 2 ===")
+        part2_start = time.time()
+        result2 = part_two(input_data)
+        part2_time = time.time() - part2_start
+
+    print("\n=== Part 1 (Optimized) ===")
+    part1_opt_start = time.time()
+    result1_opt = part_one_optimized(input_data)
+    part1_opt_time = time.time() - part1_opt_start
+
+    print("\n=== Part 2 (Optimized) ===")
+    part2_opt_start = time.time()
+    result2_opt = part_two_optimized(input_data)
+    part2_opt_time = time.time() - part2_opt_start
 
     total_time = time.time() - start_time
 
     clear_console()
     print("=== Final Results ===")
-    print(f"Part 1: {result1} (took {part1_time:.2f}s)")
-    print(f"Part 2: {result2} (took {part2_time:.2f}s)")
+    if run_unoptimized:
+        print(f"Part 1: {result1} (took {part1_time:.2f}s)")
+        print(f"Part 2: {result2} (took {part2_time:.2f}s)")
+    print(f"Part 1 (Optimized): {result1_opt} (took {part1_opt_time:.2f}s)")
+    print(f"Part 2 (Optimized): {result2_opt} (took {part2_opt_time:.2f}s)")
     print(f"\nTotal time: {total_time:.2f}s")
 
 if __name__ == "__main__":
