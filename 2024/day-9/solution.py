@@ -1,4 +1,5 @@
 import os
+import time
 
 def clear_console():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -182,20 +183,28 @@ def part_two(input_str):
     return checksum
 
 def main():
+    start_time = time.time()
     input_data = parse_input('input.txt')
 
     print(f"Input size: {len(input_data)} characters")
 
     print("\n=== Part 1 ===")
+    part1_start = time.time()
     result1 = part_one(input_data)
+    part1_time = time.time() - part1_start
 
     print("\n=== Part 2 ===")
+    part2_start = time.time()
     result2 = part_two(input_data)
+    part2_time = time.time() - part2_start
+
+    total_time = time.time() - start_time
 
     clear_console()
     print("=== Final Results ===")
-    print(f"Part 1: {result1}")
-    print(f"Part 2: {result2}")
+    print(f"Part 1: {result1} (took {part1_time:.2f}s)")
+    print(f"Part 2: {result2} (took {part2_time:.2f}s)")
+    print(f"\nTotal time: {total_time:.2f}s")
 
 if __name__ == "__main__":
     main()
