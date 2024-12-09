@@ -9,18 +9,14 @@ def parse_input(filename):
     with open(filename, 'r') as f:
         return f.read().strip()
 
-def get_disk_layout(input_str):
+def split_disk_layout(input_str):
     input_str = input_str.strip()
     return [int(x) for x in input_str[::2]], [int(x) for x in input_str[1::2]]
 
-def get_checksum(disk):
-    total = 0
-    for pos, fid in enumerate(disk):
-        if fid != '.':
-            total += pos * fid
-    return total
+def calc_disk_checksum(disk):
+    return sum(pos * fid for pos, fid in enumerate(disk) if fid != '.')
 
-def init_disk(files, spaces):
+def build_initial_disk(files, spaces):
     disk = []
     for fid, size in enumerate(files):
         disk.extend([fid] * size)
@@ -31,20 +27,14 @@ def init_disk(files, spaces):
     disk.extend(['.'] * (total_len - len(disk)))
     return disk
 
-def compact_left(disk):
+def move_files_left(disk):
     n = len(disk)
-    empty_pos = []
-
-    for i in range(n):
-        if disk[i] == '.':
-            empty_pos.append(i)
-
+    empty_pos = [i for i in range(n) if disk[i] == '.']
     if not empty_pos:
         return disk
 
-    print("\nCompacting disk...")
-    total_files = sum(1 for x in disk if x != '.')
     files_moved = 0
+    total_files = sum(1 for x in disk if x != '.')
 
     for i in range(n-1, -1, -1):
         if disk[i] != '.':
@@ -58,157 +48,47 @@ def compact_left(disk):
                 if files_moved % 1000 == 0:
                     clear_console()
                     print(f"Progress: {files_moved}/{total_files} files moved ({files_moved/total_files:.1%})")
-
     return disk
 
-def find_file_spans(disk):
-    spans = {}
-    curr_id = None
-    start = 0
-
-    for i, fid in enumerate(disk):
-        if fid != curr_id:
-            if curr_id is not None and curr_id != '.':
-                if curr_id not in spans:
-                    spans[curr_id] = []
-                spans[curr_id].append((start, i - start))
-            curr_id = fid
-            start = i
-
-    if curr_id is not None and curr_id != '.':
-        if curr_id not in spans:
-            spans[curr_id] = []
-        spans[curr_id].append((start, len(disk) - start))
-
-    return spans
-
-def find_empty_spans(disk):
-    spans = []
-    curr_len = 0
-    start = 0
-
-    for i, fid in enumerate(disk):
-        if fid == '.':
-            if curr_len == 0:
-                start = i
-            curr_len += 1
-        else:
-            if curr_len > 0:
-                spans.append((start, curr_len))
-            curr_len = 0
-
-    if curr_len > 0:
-        spans.append((start, curr_len))
-
-    return spans
-
-def get_file_map(input_str):
-    return {i: int(x) for i, x in enumerate(input_str[::2])}
-
-def get_space_map(input_str):
-    return {i: int(x) for i, x in enumerate(input_str[1::2])}
-
-def calc_file_position(files, spaces, space_left, target_space):
-    pos = sum(size for f, size in files.items() if f <= target_space)
-    pos += sum(size for s, size in spaces.items() if s < target_space)
-    if space_left[target_space] != spaces[target_space]:
-        pos += spaces[target_space] - space_left[target_space]
-    return pos
-
-def move_file(fid, files, spaces, space_left, disk_map):
-    for i in range(fid):
-        if files[fid] <= space_left[i]:
-            pos = calc_file_position(files, spaces, space_left, i)
-            space_left[i] -= files[fid]
-            if fid - 1 in spaces:
-                spaces[fid - 1] += files[fid]
-                space_left[fid - 1] += files[fid]
-
-            for x in range(pos, pos + files[fid]):
-                disk_map[x] = fid
-            files[fid] = 0
-            return True
-    return False
-
-def finalize_disk_map(files, spaces):
-    pos = 0
-    disk_map = {}
-    for fid in files:
-        for _ in range(files[fid]):
-            disk_map[pos] = fid
-            pos += 1
-        if fid in spaces:
-            pos += spaces[fid]
-    return disk_map
-
 def part_one(input_str):
-    print("Parsing disk layout...")
-    files, spaces = get_disk_layout(input_str)
+    files, spaces = split_disk_layout(input_str)
+    disk = build_initial_disk(files, spaces)
+    final = move_files_left(disk)
+    return calc_disk_checksum(final)
 
-    print("Initializing disk...")
-    disk = init_disk(files, spaces)
-
-    final = compact_left(disk)
-
-    print("\nCalculating checksum...")
-    return get_checksum(final)
-
-def part_two(input_str):
-    print("Parsing disk layout...")
-    files = get_file_map(input_str)
-    spaces = get_space_map(input_str)
-    space_left = get_space_map(input_str)
-    disk_map = {}
-
-    print("\nCompacting files...")
-    total = len(files)
-    processed = 0
-
-    for fid in reversed(files):
-        move_file(fid, files, spaces, space_left, disk_map)
-        processed += 1
-        if processed % 10 == 0:
-            clear_console()
-            print(f"Progress: {processed}/{total} files processed ({processed/total:.1%})")
-
-    print("\nFinalizing disk map...")
-    final_map = finalize_disk_map(files, spaces)
-    disk_map.update(final_map)
-
-    print("\nCalculating checksum...")
-    checksum = 0
-    for i in range(sum(int(x) for x in input_str)):
-        if i in disk_map:
-            checksum += i * disk_map[i]
-
-    return checksum
-
-def part_two_optimized(input_str):
-    # Parse directly into lists
+def part_one_optimized(input_str):
     blocks = list(map(int, input_str[::2]))
     spaces = list(map(int, input_str[1::2])) + [0]
 
-    # Create list of (pos, size, id) tuples
     disk = []
-    pos = 0
     for i, (block, space) in enumerate(zip(blocks, spaces)):
-        if block:
-            disk.append((pos, block, i))
-        pos += block + space
+        disk.extend([i] * block)
+        disk.extend(['.'] * space)
 
-    # Track moved files
+    empty = [i for i, val in enumerate(disk) if val == '.']
+
+    for i in range(len(disk)-1, -1, -1):
+        if disk[i] != '.' and empty and empty[0] < i:
+            disk[empty[0]] = disk[i]
+            disk[i] = '.'
+            empty.pop(0)
+            empty.append(i)
+
+    return calc_disk_checksum(disk)
+
+def part_two_optimized(input_str):
+    blocks = list(map(int, input_str[::2]))
+    spaces = list(map(int, input_str[1::2])) + [0]
+
+    disk = [(pos, block, i) for i, (block, space) in enumerate(zip(blocks, spaces))
+            for pos in [sum(blocks[:i]) + sum(spaces[:i])] if block]
+
     final = {}
     space_left = dict(enumerate(spaces))
 
-    # Pre-calculate cumulative sums for faster offset calculation
-    block_sums = [0]
-    space_sums = [0]
-    for i in range(len(blocks)):
-        block_sums.append(block_sums[-1] + blocks[i])
-        if i < len(spaces):
-            space_sums.append(space_sums[-1] + spaces[i])
+    block_sums = [sum(blocks[:i]) for i in range(len(blocks) + 1)]
+    space_sums = [sum(spaces[:i]) for i in range(len(spaces) + 1)]
 
-    # Process files in reverse
     for pos, size, fid in reversed(disk):
         moved = False
         for i in range(fid):
@@ -231,60 +111,71 @@ def part_two_optimized(input_str):
     return sum(fid * (pos * size + size * (size - 1) // 2)
               for fid, (pos, size) in final.items())
 
-def part_one_optimized(input_str):
-    # Parse directly into lists
-    blocks = list(map(int, input_str[::2]))
-    spaces = list(map(int, input_str[1::2])) + [0]
+def part_two(input_str):
+    files = {i: int(x) for i, x in enumerate(input_str[::2])}
+    spaces = {i: int(x) for i, x in enumerate(input_str[1::2])}
+    space_left = {i: int(x) for i, x in enumerate(input_str[1::2])}
+    disk_map = {}
 
-    # Create initial disk layout
-    disk = []
-    for i, (block, space) in enumerate(zip(blocks, spaces)):
-        disk.extend([i] * block)
-        disk.extend(['.'] * space)
+    total = len(files)
+    processed = 0
 
-    # Track empty positions
-    empty = []
-    for i, val in enumerate(disk):
-        if val == '.':
-            empty.append(i)
+    for fid in reversed(files):
+        for i in range(fid):
+            if files[fid] <= space_left[i]:
+                pos = sum(size for f, size in files.items() if f <= i)
+                pos += sum(size for s, size in spaces.items() if s < i)
+                if space_left[i] != spaces[i]:
+                    pos += spaces[i] - space_left[i]
 
-    # Move files left
-    for i in range(len(disk)-1, -1, -1):
-        if disk[i] != '.':
-            if empty and empty[0] < i:
-                disk[empty[0]] = disk[i]
-                disk[i] = '.'
-                empty.pop(0)
-                empty.append(i)
+                space_left[i] -= files[fid]
+                if fid - 1 in spaces:
+                    spaces[fid - 1] += files[fid]
+                    space_left[fid - 1] += files[fid]
 
-    # Calculate checksum
-    return sum(pos * fid for pos, fid in enumerate(disk) if fid != '.')
+                for x in range(pos, pos + files[fid]):
+                    disk_map[x] = fid
+                files[fid] = 0
+                break
+
+        processed += 1
+        if processed % 10 == 0:
+            clear_console()
+            print(f"Progress: {processed}/{total} files processed ({processed/total:.1%})")
+
+    pos = 0
+    for fid in files:
+        for _ in range(files[fid]):
+            disk_map[pos] = fid
+            pos += 1
+        if fid in spaces:
+            pos += spaces[fid]
+
+    checksum = 0
+    for i in range(sum(int(x) for x in input_str)):
+        if i in disk_map:
+            checksum += i * disk_map[i]
+
+    return checksum
 
 def main():
-    run_unoptimized = True
-
+    run_unoptimized = False
     start_time = time.time()
     input_data = parse_input('input.txt')
 
-    print(f"Input size: {len(input_data)} characters")
-
     if run_unoptimized:
-        print("\n=== Part 1 ===")
         part1_start = time.time()
         result1 = part_one(input_data)
         part1_time = time.time() - part1_start
 
-        print("\n=== Part 2 ===")
         part2_start = time.time()
         result2 = part_two(input_data)
         part2_time = time.time() - part2_start
 
-    print("\n=== Part 1 (Optimized) ===")
     part1_opt_start = time.time()
     result1_opt = part_one_optimized(input_data)
     part1_opt_time = time.time() - part1_opt_start
 
-    print("\n=== Part 2 (Optimized) ===")
     part2_opt_start = time.time()
     result2_opt = part_two_optimized(input_data)
     part2_opt_time = time.time() - part2_opt_start
