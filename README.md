@@ -4,7 +4,7 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 
 ## 🚀 Solutions
 
-### 2024 Progress: 8/25 ⭐⭐
+### 2024 Progress: 9/25 ⭐⭐
 
 | Day | Part 1 | Part 2 | Solution |
 |-----|--------|--------|----------|
@@ -16,6 +16,7 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 | [![Day 6](https://img.shields.io/badge/Day%206-Guard%20Gallivant-blue)](2024/day-6/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-6/solution.py) |
 | [![Day 7](https://img.shields.io/badge/Day%207-Bridge%20Repair-blue)](2024/day-7/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-7/solution.py) |
 | [![Day 8](https://img.shields.io/badge/Day%208-Resonant%20Collinearity-blue)](2024/day-8/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-8/solution.py) |
+| [![Day 9](https://img.shields.io/badge/Day%209-Disk%20Fragmenter-blue)](2024/day-9/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-9/solution.py) |
 
 ### Previous Years
 - 2023: Not Attempted
