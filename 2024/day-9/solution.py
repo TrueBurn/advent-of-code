@@ -100,6 +100,45 @@ def find_empty_spans(disk):
 
     return spans
 
+def get_file_map(input_str):
+    return {i: int(x) for i, x in enumerate(input_str[::2])}
+
+def get_space_map(input_str):
+    return {i: int(x) for i, x in enumerate(input_str[1::2])}
+
+def calc_file_position(files, spaces, space_left, target_space):
+    pos = sum(size for f, size in files.items() if f <= target_space)
+    pos += sum(size for s, size in spaces.items() if s < target_space)
+    if space_left[target_space] != spaces[target_space]:
+        pos += spaces[target_space] - space_left[target_space]
+    return pos
+
+def move_file(fid, files, spaces, space_left, disk_map):
+    for i in range(fid):
+        if files[fid] <= space_left[i]:
+            pos = calc_file_position(files, spaces, space_left, i)
+            space_left[i] -= files[fid]
+            if fid - 1 in spaces:
+                spaces[fid - 1] += files[fid]
+                space_left[fid - 1] += files[fid]
+
+            for x in range(pos, pos + files[fid]):
+                disk_map[x] = fid
+            files[fid] = 0
+            return True
+    return False
+
+def finalize_disk_map(files, spaces):
+    pos = 0
+    disk_map = {}
+    for fid in files:
+        for _ in range(files[fid]):
+            disk_map[pos] = fid
+            pos += 1
+        if fid in spaces:
+            pos += spaces[fid]
+    return disk_map
+
 def part_one(input_str):
     print("Parsing disk layout...")
     files, spaces = get_disk_layout(input_str)
@@ -114,9 +153,9 @@ def part_one(input_str):
 
 def part_two(input_str):
     print("Parsing disk layout...")
-    files = {i: int(x) for i, x in enumerate(input_str[::2])}
-    spaces = {i: int(x) for i, x in enumerate(input_str[1::2])}
-    space_left = {i: int(x) for i, x in enumerate(input_str[1::2])}
+    files = get_file_map(input_str)
+    spaces = get_space_map(input_str)
+    space_left = get_space_map(input_str)
     disk_map = {}
 
     print("\nCompacting files...")
@@ -124,36 +163,15 @@ def part_two(input_str):
     processed = 0
 
     for fid in reversed(files):
-        for i in range(fid):
-            if files[fid] <= space_left[i]:
-                pos = sum(size for f, size in files.items() if f <= i)
-                pos += sum(size for s, size in spaces.items() if s < i)
-                if space_left[i] != spaces[i]:
-                    pos += spaces[i] - space_left[i]
-
-                space_left[i] -= files[fid]
-                if fid - 1 in spaces:
-                    spaces[fid - 1] += files[fid]
-                    space_left[fid - 1] += files[fid]
-
-                for x in range(pos, pos + files[fid]):
-                    disk_map[x] = fid
-                files[fid] = 0
-                break
-
+        move_file(fid, files, spaces, space_left, disk_map)
         processed += 1
         if processed % 10 == 0:
             clear_console()
             print(f"Progress: {processed}/{total} files processed ({processed/total:.1%})")
 
     print("\nFinalizing disk map...")
-    pos = 0
-    for fid in files:
-        for _ in range(files[fid]):
-            disk_map[pos] = fid
-            pos += 1
-        if fid in spaces:
-            pos += spaces[fid]
+    final_map = finalize_disk_map(files, spaces)
+    disk_map.update(final_map)
 
     print("\nCalculating checksum...")
     checksum = 0
@@ -164,11 +182,7 @@ def part_two(input_str):
     return checksum
 
 def main():
-    try:
-        input_data = parse_input('input.txt')
-    except FileNotFoundError:
-        print("Error: input.txt not found")
-        return
+    input_data = parse_input('input.txt')
 
     print(f"Input size: {len(input_data)} characters")
 
