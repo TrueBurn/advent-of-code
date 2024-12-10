@@ -17,6 +17,7 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 | [![Day 7](https://img.shields.io/badge/Day%207-Bridge%20Repair-blue)](2024/day-7/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-7/solution.py) |
 | [![Day 8](https://img.shields.io/badge/Day%208-Resonant%20Collinearity-blue)](2024/day-8/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-8/solution.py) |
 | [![Day 9](https://img.shields.io/badge/Day%209-Disk%20Fragmenter-blue)](2024/day-9/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-9/solution.py) |
+| [![Day 10](https://img.shields.io/badge/Day%2010-Hoof%20It-blue)](2024/day-10/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-10/solution.py) |
 
 ## 🚀 Performance Notes
 
