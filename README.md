@@ -22,9 +22,10 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 
 ## 🚀 Performance Notes
 
-### Day 10 - Hoof It
-- Part 1: Optimized for clarity and performance by using structured input and efficient calculations.
-- Part 2: Improved performance through memoization and direct calculations, reducing execution time significantly.
+### Day 9 - Disk Fragmenter
+- Part 1: Optimized from ~5s to ~1s using direct array operations and efficient empty space tracking
+- Part 2: Improved from ~130s to ~1.7s using pre-calculated sums and optimized position calculations
+- Both optimizations maintain original logic while reducing computational complexity
 
 ### Previous Years
 - 2023: Not Attempted
