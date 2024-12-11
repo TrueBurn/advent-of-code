@@ -18,13 +18,13 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 | [![Day 8](https://img.shields.io/badge/Day%208-Resonant%20Collinearity-blue)](2024/day-8/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-8/solution.py) |
 | [![Day 9](https://img.shields.io/badge/Day%209-Disk%20Fragmenter-blue)](2024/day-9/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-9/solution.py) |
 | [![Day 10](https://img.shields.io/badge/Day%2010-Hoof%20It-blue)](2024/day-10/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-10/solution.py) |
+| [![Day 11](https://img.shields.io/badge/Day%2011-Plutonian%20Pebbles-blue)](2024/day-11/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-11/solution.py) |
 
 ## 🚀 Performance Notes
 
-### Day 9 - Disk Fragmenter
-- Part 1: Optimized from ~5s to ~1s using direct array operations and efficient empty space tracking
-- Part 2: Improved from ~130s to ~1.7s using pre-calculated sums and optimized position calculations
-- Both optimizations maintain original logic while reducing computational complexity
+### Day 10 - Hoof It
+- Part 1: Optimized for clarity and performance by using structured input and efficient calculations.
+- Part 2: Improved performance through memoization and direct calculations, reducing execution time significantly.
 
 ### Previous Years
 - 2023: Not Attempted
@@ -69,4 +69,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-⚡ Created with ❤️ by Ricus nortje
+⚡ Created with ❤️ by Ricus Nortje
