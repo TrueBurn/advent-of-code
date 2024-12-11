@@ -4,7 +4,7 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 
 ## 🚀 Solutions
 
-### 2024 Progress: 9/25 ⭐⭐
+### 2024 Progress: 11/25 ⭐⭐
 
 | Day | Part 1 | Part 2 | Solution |
 |-----|--------|--------|----------|
