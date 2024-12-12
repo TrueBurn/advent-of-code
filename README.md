@@ -4,7 +4,7 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 
 ## 🚀 Solutions
 
-### 2024 Progress: 11/25 ⭐⭐
+### 2024 Progress: 12/25 ⭐⭐
 
 | Day | Part 1 | Part 2 | Solution |
 |-----|--------|--------|----------|
@@ -19,6 +19,7 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 | [![Day 9](https://img.shields.io/badge/Day%209-Disk%20Fragmenter-blue)](2024/day-9/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-9/solution.py) |
 | [![Day 10](https://img.shields.io/badge/Day%2010-Hoof%20It-blue)](2024/day-10/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-10/solution.py) |
 | [![Day 11](https://img.shields.io/badge/Day%2011-Plutonian%20Pebbles-blue)](2024/day-11/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-11/solution.py) |
+| [![Day 12](https://img.shields.io/badge/Day%2012-Garden%20Groups-blue)](2024/day-12/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-12/solution.py) |
 
 ## 🚀 Performance Notes
 
