@@ -4,7 +4,7 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 
 ## 🚀 Solutions
 
-### 2024 Progress: 13/25 ⭐⭐
+### 2024 Progress: 14/25 ⭐⭐
 
 | Day | Part 1 | Part 2 | Solution |
 |-----|--------|--------|----------|
@@ -21,13 +21,7 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 | [![Day 11](https://img.shields.io/badge/Day%2011-Plutonian%20Pebbles-blue)](2024/day-11/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-11/solution.py) |
 | [![Day 12](https://img.shields.io/badge/Day%2012-Garden%20Groups-blue)](2024/day-12/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-12/solution.py) |
 | [![Day 13](https://img.shields.io/badge/Day%2013-Claw%20Contraption-blue)](2024/day-13/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-13/solution.py) |
-
-## 🚀 Performance Notes
-
-### Day 9 - Disk Fragmenter
-- Part 1: Optimized from ~5s to ~1s using direct array operations and efficient empty space tracking
-- Part 2: Improved from ~130s to ~1.7s using pre-calculated sums and optimized position calculations
-- Both optimizations maintain original logic while reducing computational complexity
+| [![Day 14](https://img.shields.io/badge/Day%2014-Christmas%20Tree-blue)](2024/day-14/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-14/solution.py) |
 
 ### Previous Years
 - 2023: Not Attempted
