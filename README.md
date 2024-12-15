@@ -4,7 +4,7 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 
 ## 🚀 Solutions
 
-### 2024 Progress: 14/25 ⭐⭐
+### 2024 Progress: 15/25 ⭐⭐
 
 | Day | Part 1 | Part 2 | Solution |
 |-----|--------|--------|----------|
@@ -22,6 +22,7 @@ This repository contains my solutions to [Advent of Code](https://adventofcode.c
 | [![Day 12](https://img.shields.io/badge/Day%2012-Garden%20Groups-blue)](2024/day-12/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-12/solution.py) |
 | [![Day 13](https://img.shields.io/badge/Day%2013-Claw%20Contraption-blue)](2024/day-13/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-13/solution.py) |
 | [![Day 14](https://img.shields.io/badge/Day%2014-Christmas%20Tree-blue)](2024/day-14/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-14/solution.py) |
+| [![Day 15](https://img.shields.io/badge/Day%2015-Box%20Pusher-blue)](2024/day-15/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-15/solution.py) |
 
 ### Previous Years
 - 2023: Not Attempted
