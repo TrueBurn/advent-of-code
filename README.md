@@ -2,6 +2,28 @@
 
 This repository contains my solutions to [Advent of Code](https://adventofcode.com/) challenges. Advent of Code is an annual coding event with daily programming puzzles released from December 1st to December 25th.
 
+## 🚀 Leaderboard Dashboard
+
+A custom leaderboard visualization dashboard is available in the `leaderboards` directory. Features include:
+
+- Interactive JSON file upload for leaderboard data
+- Key statistics:
+  - Total participants and stars
+  - Median stars per participant
+  - Number of participants who completed all available days
+  - Number of participants who haven't started yet
+- Fastest completion times for each day
+- Visual progress tracking for each participant
+- Time-based completion graphs
+- Responsive design with dark theme
+- Scroll-to-top functionality
+
+To use the dashboard:
+1. Go to your private leaderboard on [Advent of Code](https://adventofcode.com/)
+2. Click the [JSON] link to download your leaderboard data
+3. Open `leaderboards/default.html` in a browser
+4. Upload your JSON file using the file picker
+
 ## 🚀 Solutions
 
 ### 2024 Progress: 19/25 ⭐⭐
