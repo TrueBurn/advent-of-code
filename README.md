@@ -26,7 +26,7 @@ To use the dashboard:
 
 ## 🚀 Solutions
 
-### 2024 Progress: 19/25 ⭐⭐
+### 2024 Progress: 20/25 ⭐⭐
 
 | Day | Part 1 | Part 2 | Solution |
 |-----|--------|--------|----------|
@@ -49,6 +49,7 @@ To use the dashboard:
 | [![Day 17](https://img.shields.io/badge/Day%2017-Self--generating%20Program-blue)](2024/day-17/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-17/solution.py) |
 | [![Day 18](https://img.shields.io/badge/Day%2018-RAM%20Run-blue)](2024/day-18/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-18/solution.py) |
 | [![Day 19](https://img.shields.io/badge/Day%2019-Linen%20Layout-blue)](2024/day-19/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-19/solution.py) |
+| [![Day 20](https://img.shields.io/badge/Day%2020-Race%20Condition-blue)](2024/day-20/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-20/solution.py) |
 
 ### Previous Years
 - 2023: Not Attempted
