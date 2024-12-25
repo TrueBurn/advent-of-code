@@ -26,7 +26,7 @@ To use the dashboard:
 
 ## 🚀 Solutions
 
-### 2024 Progress: 24/25 ⭐⭐
+### 2024 Progress: 25/25 ⭐⭐
 
 | Day | Part 1 | Part 2 | Solution |
 |-----|--------|--------|----------|
@@ -54,6 +54,7 @@ To use the dashboard:
 | [![Day 22](https://img.shields.io/badge/Day%2022-Monkey%20Market-blue)](2024/day-22/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-22/solution.py) |
 | [![Day 23](https://img.shields.io/badge/Day%2023-LAN%20Party-blue)](2024/day-23/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-23/solution.py) |
 | [![Day 24](https://img.shields.io/badge/Day%2024-Crossed%20Wires-blue)](2024/day-24/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-24/solution.py) |
+| [![Day 25](https://img.shields.io/badge/Day%2025-Code%20Chronicle-blue)](2024/day-25/question.md) | ⭐ | 🎄 | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-25/solution.py) |
 
 ### Previous Years
 - 2023: Not Attempted
