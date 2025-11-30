@@ -26,7 +26,17 @@ To use the dashboard:
 
 ## 🚀 Solutions
 
-### 2024 Progress: 25/25 ⭐⭐
+### 2025 Progress: 0/25 ⭐⭐
+
+Starting December 1st, 2025!
+
+| Day | Part 1 | Part 2 | Solution |
+|-----|--------|--------|----------|
+| Day 1 | - | - | - |
+| Day 2 | - | - | - |
+| ... | - | - | - |
+
+### 2024 Progress: 25/25 ⭐⭐ (Complete!)
 
 | Day | Part 1 | Part 2 | Solution |
 |-----|--------|--------|----------|
@@ -57,33 +67,120 @@ To use the dashboard:
 | [![Day 25](https://img.shields.io/badge/Day%2025-Code%20Chronicle-blue)](2024/day-25/question.md) | ⭐ | 🎄 | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-25/solution.py) |
 
 ### Previous Years
+- **2024**: ✅ Complete (25/25 ⭐⭐)
 - 2023: Not Attempted
 - 2022: Not Attempted
 - 2021: Not Attempted
 - 2020: Not Attempted
 
-## 🛠️ Running Solutions
+## 🛠️ Development Setup
 
-1. Each day's solution is in its own directory
-2. Input files are stored as `input.txt` in the respective day's directory
-3. Problem descriptions are in `question.md` files
-4. To run a solution:
-   ```bash
-   cd 2024/day-1
-   python solution.py
-   ```
+### Install Development Dependencies
 
-## 📝 Notes
+```bash
+pip install -r requirements-dev.txt
+```
 
-- Solutions aim to be clear and readable rather than code-golfed
-- Each day's directory includes:
-  - Solution code (`solution.py`)
-  - Input data (`input.txt`)
-  - Problem description (`question.md`)
-  - Part 2 description (`question-2.md`) when applicable
-  - Unit tests (`unit_tests.py`) for solutions that require them
-    - Solutions with unit tests run tests before executing the actual solution
-    - Tests verify both example cases and edge cases where applicable
+This installs:
+- **Black** (code formatter)
+- **Flake8** (linter)
+- **isort** (import sorter)
+- **pytest** (testing framework)
+- **pytest-cov** (coverage reporting)
+
+### Code Quality Checks
+
+Run automated quality checks before committing:
+
+```bash
+# Check all Python files
+./check_code_quality.sh
+
+# Check specific directory
+./check_code_quality.sh 2025/day-1
+```
+
+### Format Code
+
+```bash
+# Format with Black (line length: 100)
+black --line-length 100 2025/day-1/solution.py
+
+# Sort imports
+isort --profile black 2025/day-1/solution.py
+```
+
+## 🏃 Running Solutions
+
+### Quick Start for New Day
+
+```bash
+# Copy template
+cp -r 2025/day-0 2025/day-X
+
+# Navigate and implement
+cd 2025/day-X
+# Add puzzle input to input.txt
+# Implement solution in solution.py
+
+# Run quality checks
+cd ../..
+./check_code_quality.sh 2025/day-X
+
+# Run solution
+cd 2025/day-X
+python solution.py
+```
+
+### Execute a Solution
+
+```bash
+cd 2025/day-1
+python solution.py
+```
+
+Each day's solution is in its own directory with:
+- `solution.py` - Main solution implementation
+- `input.txt` - Puzzle input data
+- `question.md` - Part 1 description
+- `question-2.md` - Part 2 description (when applicable)
+- `unit_tests.py` - Unit tests (for complex solutions)
+
+## 📝 Code Standards
+
+### Style Guidelines
+
+- **Line length**: 100 characters max
+- **Formatting**: Black (automatic)
+- **Linting**: Flake8 (PEP 8 compliance)
+- **Import sorting**: isort (Black profile)
+- **Type hints**: Python 3.9+ type annotations
+- **Testing**: unittest framework with pytest
+
+### Solution Structure
+
+Solutions follow a consistent pattern:
+- `parse_input(input_file)` - Parse and structure input data
+- `part1(input_file)` - Part 1 solution
+- `part2(input_file)` - Part 2 solution
+- `main()` - Orchestrates testing and execution
+
+### Best Practices
+
+- Clear and readable code over code-golfing
+- Descriptive function and variable names
+- Type hints for better code clarity
+- Unit tests for non-trivial solutions
+- Performance optimization when needed (memoization, efficient data structures)
+- Design Part 1 with Part 2 extensibility in mind
+
+### Template
+
+Use `2025/day-0` as a template for new solutions:
+- Pre-configured with proper structure
+- Includes unit test framework
+- Follows all coding standards
+- Ready to copy and implement
 
 ## ⭐ Progress Tracking
 

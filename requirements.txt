@@ -1,0 +1,7 @@
+# Runtime Dependencies for Advent of Code Solutions
+
+# Progress tracking (used in longer-running solutions)
+tqdm>=4.66.0
+
+# Note: Keep runtime dependencies minimal
+# Most AoC problems can be solved with Python standard library
