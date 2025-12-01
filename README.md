@@ -26,15 +26,14 @@ To use the dashboard:
 
 ## 🚀 Solutions
 
-### 2025 Progress: 0/25 ⭐⭐
+### 2025 Progress: 2/50 ⭐
 
-Starting December 1st, 2025!
-
-| Day | Part 1 | Part 2 | Solution |
-|-----|--------|--------|----------|
-| Day 1 | - | - | - |
-| Day 2 | - | - | - |
-| ... | - | - | - |
+| Day | Part 1 | Part 2 | Solution | Time (Part 1) | Time (Part 2) |
+|-----|--------|--------|----------|---------------|---------------|
+| [![Day 1](https://img.shields.io/badge/Day%201-Secret%20Entrance-blue)](2025/day-1/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2025/day-1/solution.py) | 01:19:48 | 01:31:07 |
+| Day 2 | - | - | - | - | - |
+| Day 3 | - | - | - | - | - |
+| ... | - | - | - | - | - |
 
 ### 2024 Progress: 25/25 ⭐⭐ (Complete!)
 
