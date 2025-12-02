@@ -26,12 +26,12 @@ To use the dashboard:
 
 ## 🚀 Solutions
 
-### 2025 Progress: 2/50 ⭐
+### 2025 Progress: 4/50 ⭐
 
 | Day | Part 1 | Part 2 | Solution | Time (Part 1) | Time (Part 2) |
 |-----|--------|--------|----------|---------------|---------------|
 | [![Day 1](https://img.shields.io/badge/Day%201-Secret%20Entrance-blue)](2025/day-1/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2025/day-1/solution.py) | 01:19:48 | 01:31:07 |
-| Day 2 | - | - | - | - | - |
+| [![Day 2](https://img.shields.io/badge/Day%202-Gift%20Shop-blue)](2025/day-2/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2025/day-2/solution.py) | 01:18:39 | 01:22:20 |
 | Day 3 | - | - | - | - | - |
 | ... | - | - | - | - | - |
 
