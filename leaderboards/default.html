@@ -5,921 +5,547 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advent of Code Leaderboard</title>
     <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0d1117;
+            --card: #161b22;
+            --card-alt: #1c2128;
+            --border: #30363d;
+            --text: #e6edf3;
+            --text-muted: #7d8590;
+            --gold: #f0c14b;
+            --silver: #8b949e;
+            --bronze: #da7b3a;
+            --p1: #58a6ff;
+            --p2: #3fb950;
+            --accent: #a371f7;
+            --fast: #3fb950;
+            --medium: #d29922;
+            --slow: #f85149;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0f0f23;
-            color: #cccccc;
-            max-width: 1200px;
-            margin: 0 auto;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.4;
             padding: 20px;
         }
 
-        h1 {
-            color: #00cc00;
-            text-align: center;
-            margin-bottom: 30px;
-        }
+        .container { max-width: 1100px; margin: 0 auto; }
 
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background-color: #1a1a2f;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .stat-value {
-            font-size: 24px;
-            color: #ffff66;
-            margin: 10px 0;
-        }
-
-        .leaderboard {
-            background-color: #1a1a2f;
-            border-radius: 8px;
-            padding: 20px;
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #333340;
-        }
-
-        th {
-            background-color: #2a2a40;
-            color: #00cc00;
-        }
-
-        tr:hover {
-            background-color: #2a2a40;
-        }
-
-        .star-count {
-            color: #ffff66;
-        }
-
-        .progress-bar {
-            background-color: #2a2a40;
-            height: 10px;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            background-color: #00cc00;
-            height: 100%;
-            transition: width 0.3s ease;
-        }
-
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
-            gap: 2px;
-            margin-top: 10px;
-        }
-
-        .day {
-            padding: 4px;
-            background-color: #2a2a40;
-            border-radius: 3px;
-            font-size: 11px;
-        }
-
-        .day-times {
-            font-size: 9px;
-            color: #888;
-            margin-top: 2px;
-        }
-
-        .completed-0 { background-color: #2a2a40; }
-        .completed-1 { background-color: #4a4a60; }
-        .completed-2 { background-color: #00cc00; }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-
-        .chart-container {
-            background-color: #1a1a2f;
-            border-radius: 8px;
-            padding: 15px;
-        }
-
-        .chart-title {
-            color: #00cc00;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .bar {
-            height: 20px;
-            background-color: #00cc00;
-            margin: 5px 0;
-            border-radius: 3px;
-            transition: width 0.3s ease;
-        }
-
-        .stat-label {
+        header {
             display: flex;
             justify-content: space-between;
-            color: #cccccc;
-            margin-bottom: 5px;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
         }
 
-        .completion-time {
-            font-size: 12px;
-            color: #888;
+        h1 { font-size: 24px; font-weight: 600; }
+        h1 span { color: var(--gold); }
+
+        .event-badge {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px 14px;
+            font-size: 13px;
+            font-weight: 500;
         }
 
-        .participant-times {
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #1a1a2f;
-            border-radius: 4px;
+        /* Upload */
+        .upload {
+            background: var(--card);
+            border: 2px dashed var(--border);
+            border-radius: 10px;
+            padding: 28px;
+            text-align: center;
+            cursor: pointer;
+            margin-bottom: 20px;
         }
+        .upload:hover { border-color: var(--p1); }
+        .upload.compact { padding: 8px 14px; display: inline-block; margin-bottom: 14px; font-size: 12px; }
+        .upload input { display: none; }
+        .upload-text { color: var(--text-muted); }
+        .file-name { color: var(--p2); font-weight: 600; margin-left: 8px; }
 
-        .time-header {
-            display: grid;
-            grid-template-columns: 120px repeat(2, 1fr);
-            gap: 10px;
-            padding: 5px;
-            border-bottom: 1px solid #333;
-            margin-bottom: 10px;
-        }
+        .hidden { display: none !important; }
 
-        .time-row {
-            display: grid;
-            grid-template-columns: 120px repeat(2, 1fr);
-            gap: 10px;
-            padding: 5px;
-        }
-
-        .sparkline-container {
-            position: relative;
-            height: 50px;
-            margin: 10px 0;
-            border-left: 1px solid #333;
-            border-bottom: 1px solid #333;
-        }
-
-        .sparkline-point {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            transform: translate(-3px, -3px);
-        }
-
-        .sparkline-point.part1 {
-            background-color: #ffff66;
-        }
-
-        .sparkline-point.part2 {
-            background-color: #00cc00;
-        }
-
-        .sparkline-line {
-            position: absolute;
-            height: 2px;
-            background-color: #333;
-        }
-
-        .time-scale {
-            position: absolute;
-            left: -50px;
-            color: #666;
-            font-size: 10px;
-        }
-
-        .day-label {
-            position: absolute;
-            bottom: -20px;
-            color: #666;
-            font-size: 10px;
-            transform: translateX(-50%);
-        }
-
+        /* Legend */
         .legend {
             display: flex;
             gap: 20px;
-            justify-content: center;
-            margin-bottom: 10px;
+            margin-bottom: 16px;
             font-size: 12px;
+            color: var(--text-muted);
+            align-items: center;
+        }
+        .legend-item { display: flex; align-items: center; gap: 6px; }
+        .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+
+        /* Table */
+        .board {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        .legend-item {
+        .board-header {
+            display: grid;
+            grid-template-columns: 50px 140px repeat(var(--num-days), 1fr);
+            background: var(--card-alt);
+            padding: 10px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .board-header > div { text-align: center; }
+        .board-header > div:nth-child(1) { text-align: center; }
+        .board-header > div:nth-child(2) { text-align: left; }
+
+        .member-row {
+            display: grid;
+            grid-template-columns: 50px 140px repeat(var(--num-days), 1fr);
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            align-items: center;
+        }
+        .member-row:last-child { border-bottom: none; }
+        .member-row:hover { background: var(--card-alt); }
+
+        .rank {
+            font-weight: 700;
+            font-size: 15px;
+            text-align: center;
+        }
+        .rank-1 { color: var(--gold); }
+        .rank-2 { color: var(--silver); }
+        .rank-3 { color: var(--bronze); }
+
+        .member-info { padding-right: 12px; }
+        .member-name {
+            font-weight: 600;
+            font-size: 13px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px;
+        }
+        .member-stats {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .member-stats .stars { color: var(--gold); }
+        .member-stats .score { color: var(--accent); }
+
+        /* Day Cell */
+        .day-cell {
+            padding: 4px 6px;
+        }
+
+        .day-cell.empty {
+            color: var(--text-muted);
+            font-size: 18px;
+            text-align: center;
+            opacity: 0.3;
+        }
+
+        .time-row {
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+            margin-bottom: 3px;
         }
+        .time-row:last-child { margin-bottom: 0; }
 
-        .legend-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
+        .time-label {
+            font-size: 9px;
+            font-weight: 700;
+            width: 18px;
+            flex-shrink: 0;
         }
+        .time-label.p1 { color: var(--p1); }
+        .time-label.p2 { color: var(--p2); }
 
-        .time-graph {
-            position: relative;
-            height: 100px;
-            margin: 10px 0;
-            display: flex;
-            gap: 2px;
-        }
-
-        .day-bar {
+        .time-bar-container {
             flex: 1;
-            position: relative;
-            background-color: #2a2a40;
+            height: 18px;
+            background: rgba(255,255,255,0.05);
             border-radius: 3px;
             overflow: hidden;
-            min-width: 20px;
+            position: relative;
         }
 
         .time-bar {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background-color: #4a4a60;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            overflow: visible;
-            min-height: 20px;
-        }
-
-        .time-bar.part1 {
-            background-color: #ffff66;
-            opacity: 0.8;
-            z-index: 2;
-        }
-
-        .time-bar.part2 {
-            background-color: #00cc00;
-            opacity: 0.8;
-            z-index: 1;
-        }
-
-        .day-label {
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 10px;
-            color: #666;
-        }
-
-        .time-label {
-            position: absolute;
-            right: -50px;
-            font-size: 10px;
-            color: #666;
-            transform: translateY(-50%);
-        }
-
-        .time-axis {
-            position: absolute;
-            width: 100%;
-            border-top: 1px dashed #333;
-        }
-
-        .time-value {
-            font-size: 11px;
-            color: white;
-            writing-mode: vertical-rl;
-            transform: rotate(180deg);
-            white-space: nowrap;
-            text-shadow: 
-                -1px -1px 2px black,
-                1px -1px 2px black,
-                -1px 1px 2px black,
-                1px 1px 2px black;
-            padding: 3px 0;
             height: 100%;
+            border-radius: 3px;
             display: flex;
             align-items: center;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-
-        .line-graph {
-            position: relative;
-            height: 150px;
-            margin: 10px 0;
-            border-left: 1px solid #333;
-            border-bottom: 1px solid #333;
-            padding: 20px 80px 20px 10px;
-            margin-right: 220px;
-        }
-
-        .time-reference-line {
-            position: absolute;
-            left: 0;
-            right: 0;
-            border-top: 1px dashed #333;
-            pointer-events: none;
-            opacity: 0.2;
-        }
-
-        .time-reference-label {
-            position: absolute;
-            right: -65px;
-            transform: translateY(-50%);
-            font-size: 11px;
-            color: #666;
-            width: 60px;
-            text-align: right;
-            font-family: monospace;
-        }
-
-        .line-path {
-            fill: none;
-            stroke-width: 2;
-            vector-effect: non-scaling-stroke;
-        }
-
-        .line-path.part1 {
-            stroke: #ffff66;
-            opacity: 0.7;
-        }
-
-        .line-path.part2 {
-            stroke: #00cc00;
-            opacity: 0.7;
-        }
-
-        .percentile-label {
-            position: absolute;
-            right: -60px;
+            justify-content: flex-end;
+            padding-right: 6px;
             font-size: 10px;
-            color: #888;
+            font-weight: 600;
+            color: #fff;
+            min-width: fit-content;
+            padding-left: 6px;
         }
 
-        .stats-box {
-            position: absolute;
-            top: 0;
-            right: -210px;
-            background-color: rgba(26, 26, 47, 0.9);
-            padding: 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            width: 200px;
-            line-height: 1.4;
+        .time-bar.p1 { background: var(--p1); }
+        .time-bar.p2 { background: var(--p2); }
+
+        /* Speed-based opacity */
+        .time-bar.speed-1 { opacity: 1; }
+        .time-bar.speed-2 { opacity: 0.85; }
+        .time-bar.speed-3 { opacity: 0.7; }
+        .time-bar.speed-4 { opacity: 0.55; }
+
+        /* Summary */
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 20px;
         }
 
-        .stats-box .header {
-            font-weight: bold;
-            margin-bottom: 4px;
-            padding-bottom: 4px;
-            border-bottom: 1px solid #444;
-        }
-
-        .stats-box .time-stat {
-            display: flex;
-            justify-content: space-between;
-            margin: 2px 0;
-        }
-
-        .stats-box .time-stat span:first-child {
-            color: #888;
-        }
-
-        .stats-box .time-stat span:last-child {
-            font-family: monospace;
-            font-size: 13px;
-        }
-
-        @media print {
-            body {
-                background-color: white;
-                color: black;
-                max-width: none;
-                padding: 0;
-            }
-
-            .leaderboard {
-                background-color: white;
-                padding: 0;
-            }
-
-            th {
-                background-color: #f0f0f0;
-                color: black;
-            }
-
-            tr:hover {
-                background-color: transparent;
-            }
-
-            .time-graph {
-                height: 200px;  /* Taller for better visibility in print */
-                page-break-inside: avoid;
-            }
-
-            .day-bar {
-                background-color: #f0f0f0;
-            }
-
-            .time-bar.part1 {
-                background-color: #ffeb3b;
-                opacity: 1;
-            }
-
-            .time-bar.part2 {
-                background-color: #4caf50;
-                opacity: 1;
-            }
-
-            .time-axis {
-                border-top: 1px solid #ccc;
-            }
-
-            .time-label, .day-label {
-                color: black;
-            }
-
-            /* Add completion time labels inside bars */
-            .time-bar::after {
-                content: attr(data-time);
-                position: absolute;
-                left: 2px;
-                bottom: 2px;
-                font-size: 8px;
-                color: black;
-                transform: rotate(-90deg);
-                transform-origin: left bottom;
-                white-space: nowrap;
-            }
-        }
-
-        .file-picker {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 10px;
-            padding: 30px;
-            border: 2px dashed #333340;
+        .summary-card {
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 8px;
-            margin: 20px auto;
-            max-width: 400px;
+            padding: 14px;
         }
 
-        .file-picker.compact {
-            padding: 10px;
-            border: 1px solid #333340;
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            margin: 0;
-            background: #1a1a2f;
-            z-index: 100;
-            max-width: none;
+        .summary-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
         }
 
-        .file-picker.compact h3 {
-            display: none;
+        .summary-value {
+            font-size: 22px;
+            font-weight: 700;
         }
 
-        .file-button {
-            background-color: #00cc00;
-            color: #0f0f23;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: background-color 0.2s;
+        .summary-detail {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
         }
 
-        .file-picker.compact .file-button {
-            padding: 5px 10px;
-            font-size: 12px;
+        /* Print - Keep dark mode */
+        @media print {
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
+            }
+
+            body {
+                background: var(--bg) !important;
+                padding: 10px;
+            }
+
+            .upload { display: none !important; }
+            .container { max-width: none; }
+
+            header { margin-bottom: 12px; padding-bottom: 10px; }
+            h1 { font-size: 18px; }
+
+            .legend { margin-bottom: 10px; font-size: 10px; }
+
+            .board-header { padding: 6px 8px; font-size: 9px; }
+
+            .member-row {
+                padding: 6px 8px;
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            .rank { font-size: 12px; }
+            .member-name { font-size: 11px; }
+            .member-stats { font-size: 9px; }
+
+            .day-cell { padding: 2px 4px; }
+            .time-row { gap: 4px; margin-bottom: 2px; }
+            .time-label { font-size: 8px; width: 14px; }
+            .time-bar-container { height: 14px; }
+            .time-bar { font-size: 8px; padding-right: 4px; padding-left: 4px; }
+
+            .summary { margin-top: 12px; gap: 8px; }
+            .summary-card { padding: 10px; }
+            .summary-label { font-size: 8px; }
+            .summary-value { font-size: 16px; }
+            .summary-detail { font-size: 9px; }
         }
 
-        .file-name {
-            color: #888;
-            font-size: 14px;
-        }
-
-        .scroll-top-btn {
-            display: none;
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 99;
-            border: none;
-            outline: none;
-            background-color: #00cc00;
-            color: #0f0f23;
-            cursor: pointer;
-            padding: 15px;
-            border-radius: 50%;
-            font-size: 18px;
-            width: 50px;
-            height: 50px;
-            opacity: 0;
-            transition: opacity 0.3s, background-color 0.2s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        }
-
-        .scroll-top-btn:hover {
-            background-color: #00ff00;
-        }
-
-        .scroll-top-btn.visible {
-            display: block;
-            opacity: 0.8;
-        }
+        @page { margin: 0.5cm; size: landscape; }
     </style>
 </head>
 <body>
-    <button id="scrollToTop" class="scroll-top-btn" title="Go to top">↑</button>
-    <h1>Advent of Code Leaderboard</h1>
-    <div class="stats-container">
-        <div id="file-picker" class="file-picker">
-            <h3>Select Leaderboard JSON</h3>
-            <input type="file" id="jsonInput" accept=".json" style="display: none;">
-            <button id="pickFile" class="file-button">Choose File</button>
-            <div id="fileName" class="file-name"></div>
-        </div>
-    </div>
+    <div class="container">
+        <header>
+            <h1>Advent of <span>Code</span></h1>
+            <div id="eventBadge" class="event-badge"></div>
+        </header>
 
-    <div id="leaderboardContent" style="display: none;">
-        <div class="stats-container">
-            <div class="stat-card">
-                <h3>Total Participants</h3>
-                <div id="participant-count" class="stat-value">0</div>
-            </div>
-            <div class="stat-card">
-                <h3>Total Stars</h3>
-                <div id="total-stars" class="stat-value">0</div>
-            </div>
-            <div class="stat-card">
-                <h3>Median Stars</h3>
-                <div id="median-stars" class="stat-value">0</div>
-            </div>
-            <div class="stat-card">
-                <h3>Completed All Available Days</h3>
-                <div id="all-complete" class="stat-value">0</div>
-            </div>
-            <div class="stat-card">
-                <h3>Haven't Started Yet</h3>
-                <div id="no-stars" class="stat-value">0</div>
-            </div>
+        <div id="upload" class="upload">
+            <input type="file" id="fileInput" accept=".json">
+            <span class="upload-text">Drop JSON or click to upload</span>
+            <span id="fileName" class="file-name"></span>
         </div>
 
-        <div class="stats-grid">
-            <div class="chart-container">
-                <h3 class="chart-title">Fastest Completions</h3>
-                <div id="completion-times"></div>
+        <div id="content" class="hidden">
+            <div class="legend">
+                <span>Legend:</span>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--p1)"></div>
+                    <span>P1 (from unlock)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot" style="background: var(--p2)"></div>
+                    <span>P2 (from P1)</span>
+                </div>
+                <span style="margin-left: auto; opacity: 0.7;">Bar width = relative time (wider = slower)</span>
             </div>
-        </div>
 
-        <div class="leaderboard">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Name</th>
-                        <th>Stars</th>
-                        <th>Local Score</th>
-                        <th>Progress</th>
-                    </tr>
-                </thead>
-                <tbody id="leaderboard-body"></tbody>
-            </table>
+            <div class="board">
+                <div id="boardHeader" class="board-header"></div>
+                <div id="boardBody"></div>
+            </div>
+
+            <div id="summary" class="summary"></div>
         </div>
     </div>
 
     <script>
-        document.getElementById('pickFile').addEventListener('click', () => {
-            document.getElementById('jsonInput').click();
+        const upload = document.getElementById('upload');
+        const fileInput = document.getElementById('fileInput');
+        const fileNameEl = document.getElementById('fileName');
+        const content = document.getElementById('content');
+
+        upload.addEventListener('click', () => fileInput.click());
+        upload.addEventListener('dragover', e => e.preventDefault());
+        upload.addEventListener('drop', e => {
+            e.preventDefault();
+            if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
         });
+        fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
 
-        document.getElementById('jsonInput').addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            document.getElementById('fileName').textContent = file.name;
-            document.getElementById('file-picker').classList.add('compact');
-
+        function handleFile(file) {
+            fileNameEl.textContent = file.name;
+            upload.classList.add('compact');
             const reader = new FileReader();
-            reader.onload = (e) => {
+            reader.onload = e => {
                 try {
-                    const data = JSON.parse(e.target.result);
-                    document.getElementById('leaderboardContent').style.display = 'block';
-                    displayLeaderboard(data);
-                } catch (error) {
-                    console.error('Error parsing JSON:', error);
-                    alert('Error loading leaderboard file. Please ensure it\'s a valid JSON file.');
-                    document.getElementById('file-picker').classList.remove('compact');
-                }
+                    render(JSON.parse(e.target.result));
+                    content.classList.remove('hidden');
+                } catch (err) { alert('Invalid JSON'); }
             };
-            reader.onerror = (error) => {
-                console.error('Error reading file:', error);
-                alert('Error reading file');
-                document.getElementById('file-picker').classList.remove('compact');
-            }
             reader.readAsText(file);
-        });
+        }
 
-        function displayLeaderboard(data) {
+        function render(data) {
+            let year = data.event ? parseInt(data.event) : 2024;
+            if (!data.event && data.day1_ts) year = new Date(data.day1_ts * 1000).getUTCFullYear();
+
+            const maxDays = year >= 2025 ? 12 : 25;
+            let actualMaxDay = 0;
+            Object.values(data.members).forEach(m => {
+                Object.keys(m.completion_day_level || {}).forEach(d => {
+                    actualMaxDay = Math.max(actualMaxDay, parseInt(d));
+                });
+            });
+            const numDays = Math.min(maxDays, Math.max(actualMaxDay, 1));
+
+            // Set CSS variable for grid
+            document.documentElement.style.setProperty('--num-days', numDays);
+
+            document.getElementById('eventBadge').textContent = `${year} · Days 1–${numDays}`;
+
             const members = Object.values(data.members)
+                .filter(m => m.stars > 0)
                 .sort((a, b) => b.local_score - a.local_score);
 
-            // Calculate the maximum possible stars for available days
-            const lastAvailableDay = Math.max(...Object.values(data.members)
-                .flatMap(m => Object.keys(m.completion_day_level))
-                .map(Number));
-            const maxPossibleStars = lastAvailableDay * 2;
-
-            // Calculate stats
-            const participantCount = members.length;
-            const totalStars = members.reduce((sum, member) => sum + member.stars, 0);
-            const sortedStars = members.map(m => m.stars).sort((a, b) => a - b);
-            const medianStars = sortedStars[Math.floor(sortedStars.length / 2)];
-            
-            // Calculate completions
-            const allDaysComplete = members.filter(m => m.stars === maxPossibleStars).length;
-            const noStars = members.filter(m => m.stars === 0).length;
-
-            // Update display
-            document.getElementById('participant-count').textContent = participantCount;
-            document.getElementById('total-stars').textContent = totalStars;
-            document.getElementById('median-stars').textContent = medianStars;
-            document.getElementById('all-complete').textContent = allDaysComplete;
-            document.getElementById('no-stars').textContent = noStars;
-
-            // Analyze completion data
-            analyzeCompletionTimes(members);
-
-            // Create table rows
-            const tbody = document.getElementById('leaderboard-body');
-            tbody.innerHTML = '';
-
-            members.forEach((member, index) => {
-                const row = document.createElement('tr');
-                const maxStars = 50; // 25 days * 2 stars
-                const progressPercent = (member.stars / maxStars) * 100;
-
-                row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${member.name || 'Anonymous'}</td>
-                    <td class="star-count">⭐ ${member.stars}</td>
-                    <td>${member.local_score}</td>
-                    <td>
-                        ${generateTimeGraph(member.completion_day_level)}
-                    </td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-
-        function generateTimeGraph(completionData) {
-            let graph = '<div class="line-graph">';
-            
-            // Collect all completion times for percentile calculation
-            const allTimes = {part1: [], part2: []};
-            const userTimes = [];
-            
-            for (let day = 1; day <= 25; day++) {
-                const dayData = completionData[day] || {};
-                const dayStart = Date.UTC(2024, 11, day, 5) / 1000;
-                
-                if (dayData['1']) {
-                    const time = dayData['1'].get_star_ts - dayStart;
-                    userTimes.push({day, time, part: 1});
-                    allTimes.part1.push(time);
-                }
-                if (dayData['2']) {
-                    const time = dayData['2'].get_star_ts - dayStart;
-                    userTimes.push({day, time, part: 2});
-                    allTimes.part2.push(time);
-                }
-            }
-            
-            // Calculate percentiles
-            const percentiles = calculatePercentiles(userTimes, allTimes);
-            
-            // Generate SVG path for line graph
-            const width = 800;
-            const height = 130;
-            const padding = 20;
-            
-            // Find min and max times for this user
-            let maxTime = Math.max(
-                ...userTimes.map(t => t.time)
-            );
-            // Round up to nearest 30 minutes if under 2 hours, otherwise nearest hour
-            if (maxTime <= 7200) {
-                maxTime = Math.ceil(maxTime / 1800) * 1800;
-            } else {
-                maxTime = Math.ceil(maxTime / 3600) * 3600;
-            }
-            
-            let part1Path = 'M ';
-            let part2Path = 'M ';
-            
-            userTimes.sort((a, b) => a.day - b.day || a.part - b.part).forEach((time, i) => {
-                const x = (time.day - 1) * (width - 2 * padding) / 24 + padding;
-                const y = height - (time.time / maxTime) * (height - 2 * padding);
-                
-                if (time.part === 1) {
-                    part1Path += `${x},${y} L `;
-                } else {
-                    part2Path += `${x},${y} L `;
-                }
-            });
-            
-            // Generate time reference lines
-            const timeReferences = [];
-            const numLines = maxTime <= 7200 ? 6 : 4;  // More lines for shorter times
-            for (let i = 0; i <= numLines; i++) {
-                const time = (maxTime * i) / numLines;
-                const y = height - (time / maxTime) * (height - 2 * padding);
-                timeReferences.push({
-                    y,
-                    label: formatTimeDiff(time)
-                });
-            }
-            
-            const referenceLines = timeReferences.map(ref => `
-                <div class="time-reference-line" style="top: ${ref.y}px"></div>
-                <div class="time-reference-label" style="top: ${ref.y}px">
-                    ${ref.label}
-                </div>
-            `).join('');
-            
-            // Remove trailing ' L '
-            part1Path = part1Path.slice(0, -3);
-            part2Path = part2Path.slice(0, -3);
-            
-            graph += `
-                ${referenceLines}
-                <svg width="100%" height="100%" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none">
-                    <path class="line-path part1" d="${part1Path}" />
-                    <path class="line-path part2" d="${part2Path}" />
-                </svg>
-                <div class="stats-box">
-                    <div class="header" style="color: #ffff66">Part 1 Times</div>
-                    <div class="time-stat">
-                        <span>Fastest 25%:</span>
-                        <span>${formatTimeDiff(percentiles.part1.p25)}</span>
-                    </div>
-                    <div class="time-stat">
-                        <span>Median:</span>
-                        <span>${formatTimeDiff(percentiles.part1.p50)}</span>
-                    </div>
-                    <div class="time-stat">
-                        <span>Slowest 25%:</span>
-                        <span>${formatTimeDiff(percentiles.part1.p75)}</span>
-                    </div>
-                    <div class="header" style="color: #00cc00; margin-top: 12px">Part 2 Times</div>
-                    <div class="time-stat">
-                        <span>Fastest 25%:</span>
-                        <span>${formatTimeDiff(percentiles.part2.p25)}</span>
-                    </div>
-                    <div class="time-stat">
-                        <span>Median:</span>
-                        <span>${formatTimeDiff(percentiles.part2.p50)}</span>
-                    </div>
-                    <div class="time-stat">
-                        <span>Slowest 25%:</span>
-                        <span>${formatTimeDiff(percentiles.part2.p75)}</span>
-                    </div>
-                </div>
-            `;
-            
-            return graph + '</div>';
-        }
-
-        function calculatePercentiles(userTimes, allTimes) {
-            // Separate times by part
-            const part1Times = userTimes.filter(t => t.part === 1).map(t => t.time).sort((a, b) => a - b);
-            const part2Times = userTimes.filter(t => t.part === 2).map(t => t.time).sort((a, b) => a - b);
-            
-            function getPercentile(arr, p) {
-                if (arr.length === 0) return null;
-                const index = Math.floor(arr.length * p);
-                return arr[Math.min(index, arr.length - 1)];
-            }
-             
-            return {
-                part1: {
-                    p25: getPercentile(part1Times, 0.25),
-                    p50: getPercentile(part1Times, 0.5),
-                    p75: getPercentile(part1Times, 0.75)
-                },
-                part2: {
-                    p25: getPercentile(part2Times, 0.25),
-                    p50: getPercentile(part2Times, 0.5),
-                    p75: getPercentile(part2Times, 0.75)
-                }
+            // Calculate time stats for scaling (use log scale thresholds)
+            // Thresholds: <5m = 20%, <15m = 40%, <1h = 60%, <3h = 80%, >3h = 100%
+            const timeToPercent = (sec) => {
+                if (sec <= 0) return 5;
+                if (sec < 5 * 60) return 15 + (sec / (5 * 60)) * 20;        // 0-5m: 15-35%
+                if (sec < 15 * 60) return 35 + ((sec - 5*60) / (10*60)) * 20;  // 5-15m: 35-55%
+                if (sec < 60 * 60) return 55 + ((sec - 15*60) / (45*60)) * 20; // 15m-1h: 55-75%
+                if (sec < 3 * 60 * 60) return 75 + ((sec - 60*60) / (2*60*60)) * 15; // 1-3h: 75-90%
+                return 90 + Math.min(10, (sec - 3*60*60) / (21*60*60) * 10);  // >3h: 90-100%
             };
-        }
 
-        function formatTimeDiff(seconds) {
-            const hours = Math.floor(seconds / 3600);
-            const minutes = Math.floor((seconds % 3600) / 60);
-            const secs = Math.floor(seconds % 60);
+            // Build header
+            const headerEl = document.getElementById('boardHeader');
+            let headerHTML = '<div>#</div><div>Name</div>';
+            for (let d = 1; d <= numDays; d++) {
+                headerHTML += `<div>Day ${d}</div>`;
+            }
+            headerEl.innerHTML = headerHTML;
 
-            if (hours > 24) {
-                const days = Math.floor(hours / 24);
-                return `${days}d ${hours % 24}h`;
-            }
-            if (hours === 0 && minutes === 0) {
-                return `${secs}s`;
-            }
-            if (hours === 0) {
-                return `${minutes}m ${secs}s`;
-            }
-            return `${hours}h ${minutes}m`;
-        }
+            // Build rows
+            const body = document.getElementById('boardBody');
+            body.innerHTML = '';
 
-        function analyzeCompletionTimes(members) {
-            const completionTimes = {};
-            const dayStart = {}; // Track when each day was released
-            
-            members.forEach(member => {
-                Object.entries(member.completion_day_level).forEach(([day, data]) => {
-                    const dayNum = parseInt(day);
-                    if (!dayStart[dayNum]) {
-                        // Each day starts at 5AM UTC
-                        const year = 2024;
-                        dayStart[dayNum] = Date.UTC(year, 11, dayNum, 5) / 1000;
+            members.forEach((member, idx) => {
+                const rank = idx + 1;
+                const completion = member.completion_day_level || {};
+
+                const row = document.createElement('div');
+                row.className = 'member-row';
+
+                let html = `
+                    <div class="rank ${rank <= 3 ? 'rank-' + rank : ''}">${rank}</div>
+                    <div class="member-info">
+                        <div class="member-name">${member.name || 'Anonymous'}</div>
+                        <div class="member-stats">
+                            <span class="stars">★${member.stars}</span>
+                            <span class="score">${member.local_score}pts</span>
+                        </div>
+                    </div>
+                `;
+
+                for (let d = 1; d <= numDays; d++) {
+                    const dayData = completion[d];
+                    const dayStart = getDayStart(year, d);
+
+                    if (dayData && dayData['1']) {
+                        const t1 = dayData['1'].get_star_ts - dayStart;
+                        const t2 = dayData['2'] ? dayData['2'].get_star_ts - dayData['1'].get_star_ts : 0;
+
+                        const w1 = timeToPercent(t1);
+                        const w2 = timeToPercent(t2);
+
+                        const speed1 = getSpeedClass(t1);
+                        const speed2 = getSpeedClass(t2);
+
+                        html += `<div class="day-cell">`;
+
+                        // P1 bar
+                        html += `<div class="time-row">
+                            <span class="time-label p1">P1</span>
+                            <div class="time-bar-container">
+                                <div class="time-bar p1 speed-${speed1}" style="width:${w1}%">${fmtTime(t1)}</div>
+                            </div>
+                        </div>`;
+
+                        // P2 bar
+                        if (dayData['2']) {
+                            html += `<div class="time-row">
+                                <span class="time-label p2">P2</span>
+                                <div class="time-bar-container">
+                                    <div class="time-bar p2 speed-${speed2}" style="width:${w2}%">${fmtTime(t2)}</div>
+                                </div>
+                            </div>`;
+                        } else {
+                            html += `<div class="time-row">
+                                <span class="time-label p2">P2</span>
+                                <div class="time-bar-container">
+                                    <div class="time-bar p2" style="width:0%;opacity:0.3">—</div>
+                                </div>
+                            </div>`;
+                        }
+
+                        html += `</div>`;
+                    } else {
+                        html += `<div class="day-cell empty">—</div>`;
                     }
+                }
 
-                    completionTimes[dayNum] = completionTimes[dayNum] || [];
-                    if (data['1'] && data['2']) {
-                        completionTimes[dayNum].push({
-                            name: member.name || 'Anonymous',
-                            part1: data['1'].get_star_ts - dayStart[dayNum],
-                            part2: data['2'].get_star_ts - dayStart[dayNum]
-                        });
+                row.innerHTML = html;
+                body.appendChild(row);
+            });
+
+            renderSummary(members, year, numDays);
+        }
+
+        function getDayStart(year, day) {
+            return Date.UTC(year, 11, day, 5, 0, 0) / 1000;
+        }
+
+        function getSpeedClass(sec) {
+            if (sec < 10 * 60) return 1;      // < 10 min
+            if (sec < 30 * 60) return 2;      // < 30 min
+            if (sec < 2 * 60 * 60) return 3;  // < 2 hours
+            return 4;                          // > 2 hours
+        }
+
+        function fmtTime(sec) {
+            if (sec < 60) return `${Math.floor(sec)}s`;
+            if (sec < 3600) {
+                const m = Math.floor(sec / 60);
+                const s = Math.floor(sec % 60);
+                return s > 0 && m < 10 ? `${m}m${s}s` : `${m}m`;
+            }
+            if (sec < 86400) {
+                const h = Math.floor(sec / 3600);
+                const m = Math.floor((sec % 3600) / 60);
+                return m > 0 ? `${h}h${m}m` : `${h}h`;
+            }
+            const d = Math.floor(sec / 86400);
+            const h = Math.floor((sec % 86400) / 3600);
+            return h > 0 ? `${d}d${h}h` : `${d}d`;
+        }
+
+        function renderSummary(members, year, numDays) {
+            const section = document.getElementById('summary');
+
+            const totalStars = members.reduce((s, m) => s + m.stars, 0);
+            const maxStars = members.length * numDays * 2;
+            const pct = maxStars > 0 ? Math.round((totalStars / maxStars) * 100) : 0;
+
+            let fastP1 = { t: Infinity, n: '', d: 0 };
+            let fastP2 = { t: Infinity, n: '', d: 0 };
+
+            members.forEach(m => {
+                Object.entries(m.completion_day_level || {}).forEach(([d, p]) => {
+                    const ds = getDayStart(year, parseInt(d));
+                    if (p['1']) {
+                        const t1 = p['1'].get_star_ts - ds;
+                        if (t1 < fastP1.t) fastP1 = { t: t1, n: m.name || 'Anon', d };
+                    }
+                    if (p['2'] && p['1']) {
+                        const t2 = p['2'].get_star_ts - p['1'].get_star_ts;
+                        if (t2 < fastP2.t) fastP2 = { t: t2, n: m.name || 'Anon', d };
                     }
                 });
             });
 
-            // Display fastest completions
-            const completionTimesDiv = document.getElementById('completion-times');
-            completionTimesDiv.innerHTML = `
-                <div class="time-header">
-                    <div>Day</div>
-                    <div>Part 1</div>
-                    <div>Part 2</div>
+            section.innerHTML = `
+                <div class="summary-card">
+                    <div class="summary-label">Participants</div>
+                    <div class="summary-value">${members.length}</div>
+                    <div class="summary-detail">with stars</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Total Stars</div>
+                    <div class="summary-value" style="color:var(--gold)">★ ${totalStars}</div>
+                    <div class="summary-detail">${pct}% complete</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Fastest P1</div>
+                    <div class="summary-value" style="color:var(--p1)">${fmtTime(fastP1.t)}</div>
+                    <div class="summary-detail">${fastP1.n} · Day ${fastP1.d}</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-label">Fastest P2</div>
+                    <div class="summary-value" style="color:var(--p2)">${fmtTime(fastP2.t)}</div>
+                    <div class="summary-detail">${fastP2.n} · Day ${fastP2.d}</div>
                 </div>
             `;
-
-            Object.entries(completionTimes).sort((a, b) => b[0] - a[0]).forEach(([day, times]) => {
-                if (times.length > 0) {
-                    // Sort by part 2 completion time
-                    times.sort((a, b) => a.part2 - b.part2);
-                    const fastest = times[0];
-                    completionTimesDiv.innerHTML += `
-                        <div class="time-row">
-                            <div>Day ${day}</div>
-                            <div>${fastest.name}<br><span class="completion-time">${formatTimeDiff(fastest.part1)}</span></div>
-                            <div>${fastest.name}<br><span class="completion-time">${formatTimeDiff(fastest.part2)}</span></div>
-                        </div>
-                    `;
-                }
-            });
         }
-
-        // Scroll to top functionality
-        const scrollToTopBtn = document.getElementById('scrollToTop');
-
-        window.addEventListener('scroll', () => {
-            if (document.documentElement.scrollTop > 300) {
-                scrollToTopBtn.classList.add('visible');
-            } else {
-                scrollToTopBtn.classList.remove('visible');
-            }
-        });
-
-        scrollToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
     </script>
 </body>
 </html>
