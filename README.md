@@ -26,7 +26,7 @@ To use the dashboard:
 
 ## 🚀 Solutions
 
-### 2025 Progress: 12/50 ⭐
+### 2025 Progress: 14/50 ⭐
 
 | Day | Part 1 | Part 2 | Solution | Time (Part 1) | Time (Part 2) |
 |-----|--------|--------|----------|---------------|---------------|
@@ -36,6 +36,7 @@ To use the dashboard:
 | [![Day 4](https://img.shields.io/badge/Day%204-Printing%20Department-blue)](2025/day-4/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2025/day-4/solution.py) | 00:06:24 | 00:08:15 |
 | [![Day 5](https://img.shields.io/badge/Day%205-Cafeteria-blue)](2025/day-5/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2025/day-5/solution.py) | 00:20:51 | 00:22:36 |
 | [![Day 6](https://img.shields.io/badge/Day%206-Trash%20Compactor-blue)](2025/day-6/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2025/day-6/solution.py) | 14:19:56 | 14:28:55 |
+| [![Day 7](https://img.shields.io/badge/Day%207-Laboratories-blue)](2025/day-7/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2025/day-7/solution.py) | 03:30:13 | 03:33:47 |
 | ... | - | - | - | - | - |
 
 ### 2024 Progress: 25/25 ⭐⭐ (Complete!)
