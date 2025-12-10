@@ -3,5 +3,9 @@
 # Progress tracking (used in longer-running solutions)
 tqdm>=4.66.0
 
+# Numerical computing (used for optimization problems)
+numpy>=1.24.0
+scipy>=1.10.0
+
 # Note: Keep runtime dependencies minimal
 # Most AoC problems can be solved with Python standard library
