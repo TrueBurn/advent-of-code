@@ -43,7 +43,7 @@ To use the dashboard:
 | [![Day 11](https://img.shields.io/badge/Day%2011-Reactor-blue)](2025/day-11/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2025/day-11/solution.py) | 01:33:23 | 01:46:44 |
 | [![Day 12](https://img.shields.io/badge/Day%2012-Christmas%20Tree%20Farm-blue)](2025/day-12/question.md) | ⭐ | ⭐ | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2025/day-12/solution.py) | 01:58:09 | 01:59:42 |
 
-### 2024 Progress: 25/25 ⭐⭐ (Complete!)
+### 2024 Progress: 50/50 ⭐ (Complete!)
 
 | Day | Part 1 | Part 2 | Solution |
 |-----|--------|--------|----------|
@@ -74,8 +74,8 @@ To use the dashboard:
 | [![Day 25](https://img.shields.io/badge/Day%2025-Code%20Chronicle-blue)](2024/day-25/question.md) | ⭐ | 🎄 | [![Python](https://img.shields.io/badge/Python-blue?logo=python&logoColor=white)](2024/day-25/solution.py) |
 
 ### Previous Years
-- **2025**: ✅ Complete (12/12 ⭐⭐)
-- **2024**: ✅ Complete (25/25 ⭐⭐)
+- **2025**: ✅ Complete (24/24 ⭐)
+- **2024**: ✅ Complete (50/50 ⭐)
 - 2023: Not Attempted
 - 2022: Not Attempted
 - 2021: Not Attempted
